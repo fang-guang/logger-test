@@ -1,0 +1,30 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "test logger frame",
+  "main": "app.js",
+  "dependencies": {
+    "@hapi/boom": "^9.1.4",
+    "@sentry/node": "^6.15.0",
+    "@sentry/tracing": "^6.15.0",
+    "autocannon": "^7.5.0",
+    "boom": "^7.3.0",
+    "koa": "^2.13.4",
+    "koa-router": "^10.1.1",
+    "lodash": "^4.17.21",
+    "log4js": "^6.3.0",
+    "nanoid": "^3.1.30",
+    "pino": "^6.7.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  },
+  "scripts": {
+    "start:pino": "logger_type=pino nodemon app",
+    "start:log4": "logger_type=log4 nodemon app",
+    "start:winston": "logger_type=winston nodemon app"
+  },
+  "author": "",
+  "license": "ISC"
+}
