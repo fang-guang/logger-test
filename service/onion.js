@@ -19,22 +19,24 @@ const useP = function(fn) {
   return middleware;
 }
 
-// conpose方法实现
-function compose(middleware) {
-  return function (ctx, next) {
-    function onion(i) {
-      let fn = middleware[i];
-      // 此时next为middleware[middleware.length + 1]为undefined
+// middleware 中间件函数数组, 数组中是一个个的中间件函数
+function compose (middleware) { 
+  return function (context, next) { // 调用compose函数会返回一个函数
+    let index = -1
+    return dispatch(0) // 启动middleware数组中的第一个函数的执行
+    function dispatch (i) {
+      index = i
+      let fn = middleware[i]
       if (i === middleware.length) {
-        fn = next;
+        fn = next
       }
-      if (!fn) {
-        return Promise.resolve();
-      }
-      return Promise.resolve(fn(ctx, onion.bind(null, i + 1)));
+      if (!fn) return Promise.resolve()
+      // 这里执行middleware数组函数
+      return Promise.resolve(fn(context, function next () { 
+        return dispatch(i + 1)  // 执行下一个中间件函数
+      }))
     }
-    return onion(0);
-  };
+  }
 }
 
 useP(f1);
